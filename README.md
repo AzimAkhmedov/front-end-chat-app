@@ -37,12 +37,5 @@ Open in browser
 ```
 
 
-## Related
-
-Here are some related projects
-
-[Awesome README](https://github.com/matiassingers/awesome-readme)
-
-
 # Tech Stack
 [![My Skills](https://skillicons.dev/icons?i=react,vite,ts,redux,scss,mui&perline=3)](https://skillicons.dev)
