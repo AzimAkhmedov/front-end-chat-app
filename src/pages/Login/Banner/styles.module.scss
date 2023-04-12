@@ -1,0 +1,25 @@
+.root {
+  background-color: var(--red);
+  max-width: 735px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  row-gap: 84px;
+
+  border-radius: 15px;
+  padding: 64px 91px 96px 98px;
+
+  img {
+    padding-left: 25px;
+  }
+  div {
+    color: #fff;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 300;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+  }
+}

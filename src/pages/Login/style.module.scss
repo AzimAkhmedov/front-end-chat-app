@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 22px;
+  padding-left: 122px;
+
+  font-family: Poppins;
+
+  form {
+    .form_title {
+      display: flex;
+      flex-direction: column;
+      row-gap: 16px;
+      h2 {
+        font-size: 30px;
+        font-weight: 800;
+      }
+      a{
+        color: #D70C20;
+        font-weight: 800;
+      }
+    }
+  }
+}
