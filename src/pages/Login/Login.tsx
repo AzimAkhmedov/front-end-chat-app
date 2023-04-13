@@ -27,7 +27,7 @@ const Login = () => {
   ) => {
     event.preventDefault();
   };
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) =>{ console.log("test");}
 
   return (
     <div className={s.root + " container"}>
@@ -36,7 +36,7 @@ const Login = () => {
         <div className={s.form_item + " " + s.form_title}>
           <h2>Sign in</h2>
           <p>
-            If you don’t have an account register <br />
+            If you don't have an account register <br />
             You can <NavLink to={"/registration"}>Register here !</NavLink>
           </p>
         </div>
@@ -45,6 +45,7 @@ const Login = () => {
           <PatternFormat
             sx={{ letterSpacing: "1px" }}
             customInput={Input}
+            {...register('mobile',{required:true})}
             startAdornment={
               <InputAdornment position="start">
                 <PhoneOutlined sx={{ width: "18px", height:"18px" }} />
@@ -86,7 +87,11 @@ const Login = () => {
           </div>
         </div>
 
-        <button type="submit">Login</button>
+        <button onClick={()=>{
+          handleSubmit(onSubmit)
+          console.log("test");
+          
+        }} type="submit" >Login</button>
       </form>
       <Banner />
     </div>
