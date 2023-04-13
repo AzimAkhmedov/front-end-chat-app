@@ -8,7 +8,12 @@
   font-family: Poppins;
 
   form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
     .form_title {
+      padding-top: 80px;
       display: flex;
       flex-direction: column;
       row-gap: 16px;
@@ -16,10 +21,48 @@
         font-size: 30px;
         font-weight: 800;
       }
-      a{
-        color: #D70C20;
+      a {
+        color: #d70c20;
         font-weight: 800;
       }
+    }
+
+    .form_item {
+      display: flex;
+      flex-direction: column;
+      sub {
+        font-size: 13px;
+        font-weight: 500;
+        color: #999999;
+      }
+      input {
+        font-size: 16px;
+      }
+      .checkbox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 300;
+        font-size: 12px;
+
+        span {
+          font-size: 12px;
+        }
+        p:hover {
+          color: var(--red);
+          border-bottom: 2px solid var(--red);
+        }
+      }
+    }
+    [type="submit"] {
+      height: 53px;
+      border-radius: 32px;
+      background: #d70c20;
+
+      font-size: 17px;
+      font-weight: 500;
+
+      color: #fff;
     }
   }
 }
