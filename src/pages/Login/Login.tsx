@@ -45,7 +45,6 @@ const Login = () => {
           <PatternFormat
             sx={{ letterSpacing: "1px" }}
             customInput={Input}
-            {...register('mobile',{required:true})}
             startAdornment={
               <InputAdornment position="start">
                 <PhoneOutlined sx={{ width: "18px", height:"18px" }} />

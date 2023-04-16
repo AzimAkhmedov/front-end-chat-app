@@ -48,9 +48,12 @@
         span {
           font-size: 12px;
         }
-        p:hover {
-          color: var(--red);
-          border-bottom: 2px solid var(--red);
+        p {
+          cursor: pointer;
+          &:hover {
+            color: var(--red);
+            border-bottom: 2px solid var(--red);
+          }
         }
       }
     }
@@ -64,5 +67,14 @@
 
       color: #fff;
     }
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .root {
+    justify-content: center;
+    align-items: center;
+    padding: 0;
   }
 }
