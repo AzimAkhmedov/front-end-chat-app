@@ -24,6 +24,10 @@
       a {
         color: #d70c20;
         font-weight: 800;
+        transition: 0.1s;
+        &:hover {
+          border-bottom: 2px solid red;
+        }
       }
     }
 
