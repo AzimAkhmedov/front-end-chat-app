@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api } from "api";
-import { IState, IUser } from "models";
+import { api } from "../../api";
+import { IConfirmProps, IState, IUser } from "models";
 
 const initialState: IState = {
     user: {
@@ -12,13 +12,17 @@ const initialState: IState = {
     verificationModal: false
 }
 
-const registration = createAsyncThunk('registration', async (data: IUser) => {
+export const registration = createAsyncThunk('registration', async (data: IUser) => {
     const res = await api.register(data)
     return { data, res }
 })
+export const confirmRegistration = createAsyncThunk('confirm-code', async (confirmProps: IConfirmProps) => {
+    const res = await api.confirmRegistrationCode(confirmProps)
+    return res
+})
 
 
-const reducer = createSlice({
+const reducerSlice = createSlice({
     name: 'reducer', initialState, reducers: {
     }, extraReducers: (builder) => {
         builder.addCase(registration.pending, (state) => {
@@ -33,4 +37,5 @@ const reducer = createSlice({
 })
 
 
-export const { } = reducer.actions
+export const { } = reducerSlice.actions
+export default reducerSlice.reducer

@@ -3,25 +3,30 @@ import s from "./style.module.scss";
 import Banner from "./Banner";
 import { Logo } from "../../components";
 import { NavLink } from "react-router-dom";
-import { PatternFormat } from "react-number-format";
 import { IconButton, Input, InputAdornment } from "@mui/material";
 import {
   LockOutlined,
-  PhoneOutlined,
   Visibility,
   VisibilityOff,
   PeopleOutline,
+  EmailOutlined,
 } from "@mui/icons-material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { registration } from "../../store/reducers";
+import Verification from "./Popup";
 interface Inputs {
-  mobile: string;
+  username: string;
+  email: string;
   password: string;
-  confirmPassword: string;
+  // confirmPassword: string;
 }
 const Registration = () => {
   const dispatch = useAppDispatch();
-
+  const modalState = true;
+  // useAppSelector(
+  //   (state) => state.reducerSlice.verificationModal
+  // );
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setConfirmPassword] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<Inputs>();
@@ -34,9 +39,12 @@ const Registration = () => {
   ) => {
     event.preventDefault();
   };
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) =>
+    dispatch(registration(data));
 
-  return (
+  return modalState ? (
+    <Verification />
+  ) : (
     <div className={s.root + " container"}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Logo />
@@ -48,23 +56,22 @@ const Registration = () => {
           </p>
         </div>
         <div className={s.form_item}>
-          <sub>Phone number</sub>
-          <PatternFormat
+          <sub>Email</sub>
+          <Input
+            type="email"
             sx={{ letterSpacing: "1px" }}
-            customInput={Input}
             startAdornment={
               <InputAdornment position="start">
-                <PhoneOutlined sx={{ width: "18px", height: "18px" }} />
+                <EmailOutlined sx={{ width: "18px", height: "18px" }} />
               </InputAdornment>
             }
-            format="+998 (##) ### ## ##"
-            allowEmptyFormatting
-            mask="_"
+            {...register("email")}
           />
         </div>
         <div className={s.form_item}>
           <sub>Username</sub>
           <Input
+            {...register("username")}
             sx={{ letterSpacing: "1px" }}
             startAdornment={
               <InputAdornment position="start">
@@ -76,6 +83,7 @@ const Registration = () => {
         <div className={s.form_item}>
           <sub>Password</sub>
           <Input
+            {...register("password")}
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -105,7 +113,6 @@ const Registration = () => {
           <Input
             type={showConfirmPassword ? "text" : "password"}
             sx={{ letterSpacing: "1px" }}
-            {...register("confirmPassword")}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
