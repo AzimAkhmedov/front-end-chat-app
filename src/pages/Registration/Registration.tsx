@@ -4,41 +4,46 @@ import Banner from "./Banner";
 import { Logo } from "../../components";
 import { NavLink } from "react-router-dom";
 import { PatternFormat } from "react-number-format";
-import { Checkbox, FormControlLabel, IconButton, Input, InputAdornment } from "@mui/material";
-import { LockOutlined, PhoneOutlined, Visibility, VisibilityOff,  PeopleOutline } from "@mui/icons-material";
+import { IconButton, Input, InputAdornment } from "@mui/material";
+import {
+  LockOutlined,
+  PhoneOutlined,
+  Visibility,
+  VisibilityOff,
+  PeopleOutline,
+} from "@mui/icons-material";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useAppDispatch } from "../../hooks";
 interface Inputs {
   mobile: string;
   password: string;
+  confirmPassword: string;
 }
 const Registration = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setConfirmPassword] = useState<boolean>(false)
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
-  
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () => setConfirmPassword((show) => !show);
+  const dispatch = useAppDispatch();
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setConfirmPassword] = useState<boolean>(false);
+  const { register, handleSubmit } = useForm<Inputs>();
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirmPassword = () =>
+    setConfirmPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };
-  const onSubmit: SubmitHandler<Inputs> = (data) =>{ console.log("test");}
-
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
     <div className={s.root + " container"}>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Logo />
         <div className={s.form_item + " " + s.form_title}>
           <h2>Sign in</h2>
           <p>
-          If you already have an account register <br />
+            If you already have an account register <br />
             You can <NavLink to={"/login"}>Login here !</NavLink>
           </p>
         </div>
@@ -49,7 +54,7 @@ const Registration = () => {
             customInput={Input}
             startAdornment={
               <InputAdornment position="start">
-                <PhoneOutlined sx={{ width: "18px", height:"18px" }} />
+                <PhoneOutlined sx={{ width: "18px", height: "18px" }} />
               </InputAdornment>
             }
             format="+998 (##) ### ## ##"
@@ -63,7 +68,7 @@ const Registration = () => {
             sx={{ letterSpacing: "1px" }}
             startAdornment={
               <InputAdornment position="start">
-                <PeopleOutline sx={{ width: "18px", height:"18px" }} />
+                <PeopleOutline sx={{ width: "18px", height: "18px" }} />
               </InputAdornment>
             }
           />
@@ -80,14 +85,17 @@ const Registration = () => {
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {showPassword ? <VisibilityOff  sx={{ width: "14px", height:"14px" }} /> 
-                  : <Visibility sx={{ width: "14px", height:"14px" }} />}
+                  {showPassword ? (
+                    <VisibilityOff sx={{ width: "14px", height: "14px" }} />
+                  ) : (
+                    <Visibility sx={{ width: "14px", height: "14px" }} />
+                  )}
                 </IconButton>
               </InputAdornment>
             }
             startAdornment={
               <InputAdornment position="start">
-                <LockOutlined sx={{ width: "18px", height:"18px" }}/>
+                <LockOutlined sx={{ width: "18px", height: "18px" }} />
               </InputAdornment>
             }
           />
@@ -97,6 +105,7 @@ const Registration = () => {
           <Input
             type={showConfirmPassword ? "text" : "password"}
             sx={{ letterSpacing: "1px" }}
+            {...register("confirmPassword")}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -105,25 +114,23 @@ const Registration = () => {
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {showConfirmPassword ? <VisibilityOff  sx={{ width: "14px", height:"14px" }} /> 
-                  : <Visibility sx={{ width: "14px", height:"14px" }} />}
+                  {showConfirmPassword ? (
+                    <VisibilityOff sx={{ width: "14px", height: "14px" }} />
+                  ) : (
+                    <Visibility sx={{ width: "14px", height: "14px" }} />
+                  )}
                 </IconButton>
               </InputAdornment>
             }
             startAdornment={
               <InputAdornment position="start">
-                <LockOutlined sx={{ width: "18px", height:"18px" }}/>
+                <LockOutlined sx={{ width: "18px", height: "18px" }} />
               </InputAdornment>
             }
           />
         </div>
 
-
-        <button onClick={()=>{
-          handleSubmit(onSubmit)
-          console.log("test");
-          
-        }} type="submit" >Register</button>
+        <button type="submit">Register</button>
       </form>
       <Banner />
     </div>
