@@ -2,8 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import { HomePage } from "./Home";
 import { LoginPage } from "./Login";
 import { RegisterPage } from "./Registration";
-// import { VerificationPage } from "./Verification";
-export const router = createBrowserRouter(
+import { useAppSelector } from "../hooks";
+import { PassPage } from "./PassedRegistration";
+export const publicRoutes = createBrowserRouter(
   [
     {
       path: "",
@@ -16,10 +17,22 @@ export const router = createBrowserRouter(
     {
       element: <RegisterPage />,
       path: "registration",
+      
     },
- 
   ],
   {
     basename: "/",
   }
 );
+
+// export const privateRoutes = createBrowserRouter(
+//   [
+//     {
+//       path: "registration",
+//       element: <PassPage />,
+//     },
+//   ],
+//   {
+//     basename: "/",
+//   }
+// );

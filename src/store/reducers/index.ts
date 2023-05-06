@@ -9,6 +9,9 @@ const initialState: IState = {
         password: '',
         username: '',
     },
+    loaders: {
+        appLoader: false, messageLoader: false, userLoader: false
+    },
     verificationModal: false
 }
 
@@ -18,6 +21,7 @@ export const registration = createAsyncThunk('registration', async (data: IUser)
 })
 export const confirmRegistration = createAsyncThunk('confirm-code', async (confirmProps: IConfirmProps) => {
     const res = await api.confirmRegistrationCode(confirmProps)
+    console.log(res);
     return res
 })
 
@@ -26,13 +30,22 @@ const reducerSlice = createSlice({
     name: 'reducer', initialState, reducers: {
     }, extraReducers: (builder) => {
         builder.addCase(registration.pending, (state) => {
-
-        }).addCase(registration.rejected, (state, action) => {
+        }).addCase(registration.rejected, (state) => {
             state.user.isAuth = false
-
         }).addCase(registration.fulfilled, (state, action) => {
             state.verificationModal = true
+            state.user.email = action.payload.data.email
         })
+            .addCase(confirmRegistration.fulfilled, (state, action) => {
+                state.user.isAuth = true
+                state.user.email = action.payload.data.email
+                state.user.password = action.payload.data.password
+                state.verificationModal = false
+                state.loaders = { ...state.loaders, userLoader: false }
+
+            }).addCase(confirmRegistration.pending, (state) => {
+                state.loaders = { ...state.loaders, userLoader: true }
+            })
     }
 })
 

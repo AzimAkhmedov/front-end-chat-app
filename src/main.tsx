@@ -3,11 +3,11 @@ import App from "./App";
 import { BrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import { router } from "./pages";
+import { publicRoutes } from "./pages";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <RouterProvider router={publicRoutes} />
     <App />
   </Provider>
 );

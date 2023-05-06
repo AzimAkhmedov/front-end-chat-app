@@ -7,6 +7,9 @@ export const api = {
         authInstance.post('register', data).then(res => res)
     },
     confirmRegistrationCode(verificationProps: IConfirmProps) {
-        authInstance.post('confirm-code', verificationProps).then(res => res)
+        return authInstance.post('confirm-code', verificationProps)
+    },
+    resendVerificationCode(){
+
     }
 }

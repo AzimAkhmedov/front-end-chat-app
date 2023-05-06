@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import s from "./style.module.scss";
 import Banner from "./Banner";
 import { Logo } from "../../components";
-import { NavLink } from "react-router-dom";
+import { NavLink, redirect } from "react-router-dom";
 import { IconButton, Input, InputAdornment } from "@mui/material";
 import {
   LockOutlined,
@@ -14,19 +14,25 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { registration } from "../../store/reducers";
+import { getIsAuthState } from "../../store/selectors";
+
 import Verification from "./Popup";
 interface Inputs {
   username: string;
   email: string;
   password: string;
-  // confirmPassword: string;
 }
 const Registration = () => {
+  const isAuth = useAppSelector((state) => getIsAuthState(state.reducerSlice));
+  if (isAuth) {
+    redirect("/passed");
+  }
+
   const dispatch = useAppDispatch();
-  const modalState = true;
-  // useAppSelector(
-  //   (state) => state.reducerSlice.verificationModal
-  // );
+  const modalState = useAppSelector(
+    (state) => state.reducerSlice.verificationModal
+  );
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setConfirmPassword] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<Inputs>();
@@ -41,7 +47,6 @@ const Registration = () => {
   };
   const onSubmit: SubmitHandler<Inputs> = (data) =>
     dispatch(registration(data));
-
   return modalState ? (
     <Verification />
   ) : (
@@ -58,6 +63,7 @@ const Registration = () => {
         <div className={s.form_item}>
           <sub>Email</sub>
           <Input
+            required
             type="email"
             sx={{ letterSpacing: "1px" }}
             startAdornment={
@@ -71,6 +77,7 @@ const Registration = () => {
         <div className={s.form_item}>
           <sub>Username</sub>
           <Input
+            required
             {...register("username")}
             sx={{ letterSpacing: "1px" }}
             startAdornment={
@@ -83,6 +90,7 @@ const Registration = () => {
         <div className={s.form_item}>
           <sub>Password</sub>
           <Input
+            required
             {...register("password")}
             type={showPassword ? "text" : "password"}
             endAdornment={
@@ -111,6 +119,7 @@ const Registration = () => {
         <div className={s.form_item}>
           <sub>Confirm Password</sub>
           <Input
+            required
             type={showConfirmPassword ? "text" : "password"}
             sx={{ letterSpacing: "1px" }}
             endAdornment={
@@ -136,7 +145,6 @@ const Registration = () => {
             }
           />
         </div>
-
         <button type="submit">Register</button>
       </form>
       <Banner />
